@@ -1,0 +1,60 @@
+name: daily-ingest
+
+on:
+  schedule:
+    - cron: "0 22 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily ingest
+        id: ingest
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: |
+          set +e
+          python -m scripts.daily_ingest
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Commit & push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/ logs/
+          if git diff --cached --quiet; then
+            echo "no changes"
+            exit 0
+          fi
+          run_date="$(date -u +%Y-%m-%d)"
+          summary_json="$(ls -1t logs/summary_*.json | head -n 1)"
+          written="$(python -c "import json,sys; d=json.load(open(sys.argv[1])); print(d['written'])" "$summary_json")"
+          errors="$(python -c "import json,sys; d=json.load(open(sys.argv[1])); print(len(d['errors']))" "$summary_json")"
+          git commit -m "ingest: ${run_date} daily snapshot (${written} written, ${errors} errors)"
+          git pull --rebase origin "${GITHUB_REF_NAME:-main}"
+          git push origin "HEAD:${GITHUB_REF_NAME:-main}"
+
+      - name: Fail on high error ratio
+        if: steps.ingest.outputs.exit_code != '0'
+        run: |
+          echo "daily ingest exited non-zero: ${{ steps.ingest.outputs.exit_code }}"
+          exit 1

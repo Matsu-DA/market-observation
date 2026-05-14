@@ -1,0 +1,6 @@
+pandas>=2.0
+pyarrow>=15.0
+fredapi>=0.5
+yfinance>=0.2.40
+tenacity>=8.2
+requests>=2.31
