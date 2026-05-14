@@ -1,0 +1,15 @@
+{
+  "errors": [
+    {
+      "dataset": "BAMLH0A0IGAA",
+      "error": "ValueError: Bad Request.  The series does not exist.",
+      "source": "fred"
+    }
+  ],
+  "kind": "daily",
+  "run_at": "2026-05-14T01:47:32Z",
+  "skipped_empty": 1,
+  "skipped_exists": 0,
+  "total_datasets": 16,
+  "written": 36
+}
