@@ -40,8 +40,28 @@ immutable / append-only / rewrite 禁止 / revision tracking 非対応 は
 
 | Source | Dataset |
 |---|---|
-| FRED | DGS2, DGS10, DGS30, DFII10, T10YIE, BAMLH0A0HYM2, BAMLH0A0IGAA, VIXCLS, DEXUSEU |
-| Yahoo Finance | QQQ, SPY, RSP, IWM, GLD, USO, CPER |
+| FRED | DGS2, DGS10, DGS30, DFII10, T10YIE, T10Y2Y, BAMLH0A0HYM2, BAMLC0A0CM, VIXCLS, SOFR, DFF, RRPONTSYD, DTWEXBGS |
+| Yahoo Finance | SPY, QQQ, RSP, IWM, HYG, JNK, TLT, SOXX, XLF, KRE, GLD, USO, CPER, DBC, XLE |
+
+---
+
+## 観測カテゴリ
+
+dataset 一覧は単なる設定ではなく観測哲学そのもの。
+「なぜそれを見るのか」を未来の自分が思い出せるように残す。
+
+| カテゴリ | dataset | 何を見るか |
+|---|---|---|
+| 金利 | DGS2/10/30, DFII10, T10YIE, T10Y2Y, TLT | term structure / 実質金利 / inflation expectation / duration trade |
+| 信用 | BAMLH0A0HYM2, BAMLC0A0CM, HYG, JNK | HY/IG OAS / ETF liquidity stress / dislocation |
+| 流動性 | SOFR, DFF, RRPONTSYD | 担保調達金利 / Fed Funds 乖離 / RRP 枯渇 |
+| ドル | DTWEXBGS | 世界流動性 / EM 圧迫 / dollar shortage |
+| 株式 | SPY, QQQ, RSP, IWM | 大型 / テック / 均等 / 小型 |
+| AI/半導体 | SOXX | AI CAPEX 上流 (HBM / DC / 電力) |
+| 金融セクター | XLF, KRE | 銀行ストレス / CRE / deposit flight (先行指標) |
+| ボラティリティ | VIXCLS | 株式恐怖指数 (債券版 MOVE は安定 source 確保後に追加予定) |
+| コモディティ | GLD, USO, CPER, DBC | 金 / 原油 / 銅 / 広範コモディティ |
+| エネルギー株 | XLE | エネルギー企業利益面 (USO の先物ノイズを補完) |
 
 ---
 
