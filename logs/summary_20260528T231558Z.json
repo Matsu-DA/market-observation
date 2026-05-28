@@ -1,0 +1,75 @@
+{
+  "errors": [
+    {
+      "dataset": "DGS2",
+      "error": "ValueError: None",
+      "source": "fred"
+    },
+    {
+      "dataset": "DGS10",
+      "error": "ValueError: None",
+      "source": "fred"
+    },
+    {
+      "dataset": "DGS30",
+      "error": "ValueError: None",
+      "source": "fred"
+    },
+    {
+      "dataset": "DFII10",
+      "error": "ValueError: None",
+      "source": "fred"
+    },
+    {
+      "dataset": "T10YIE",
+      "error": "ValueError: None",
+      "source": "fred"
+    },
+    {
+      "dataset": "T10Y2Y",
+      "error": "ValueError: None",
+      "source": "fred"
+    },
+    {
+      "dataset": "BAMLH0A0HYM2",
+      "error": "ValueError: None",
+      "source": "fred"
+    },
+    {
+      "dataset": "BAMLC0A0CM",
+      "error": "ValueError: None",
+      "source": "fred"
+    },
+    {
+      "dataset": "VIXCLS",
+      "error": "ValueError: None",
+      "source": "fred"
+    },
+    {
+      "dataset": "SOFR",
+      "error": "ValueError: None",
+      "source": "fred"
+    },
+    {
+      "dataset": "DFF",
+      "error": "ValueError: None",
+      "source": "fred"
+    },
+    {
+      "dataset": "RRPONTSYD",
+      "error": "ValueError: None",
+      "source": "fred"
+    },
+    {
+      "dataset": "DTWEXBGS",
+      "error": "ValueError: None",
+      "source": "fred"
+    }
+  ],
+  "kind": "daily",
+  "run_at": "2026-05-28T23:15:58Z",
+  "skipped_empty": 0,
+  "skipped_exists": 30,
+  "total_datasets": 28,
+  "written": 15
+}
