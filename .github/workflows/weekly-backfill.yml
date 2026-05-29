@@ -29,14 +29,15 @@ jobs:
 
       - name: Run weekly backfill
         id: backfill
+        continue-on-error: true
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: |
-          set +e
-          python -m scripts.weekly_backfill
-          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+          set -o pipefail
+          python -m scripts.weekly_backfill 2>&1 | tee backfill_run.log
 
       - name: Commit & push
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -52,8 +53,10 @@ jobs:
           git pull --rebase origin "${GITHUB_REF_NAME:-main}"
           git push origin "HEAD:${GITHUB_REF_NAME:-main}"
 
-      - name: Fail on high error ratio
-        if: steps.backfill.outputs.exit_code != '0'
+      - name: Surface backfill failure
+        if: steps.backfill.outcome == 'failure'
         run: |
-          echo "weekly backfill exited non-zero: ${{ steps.backfill.outputs.exit_code }}"
+          echo "::error::weekly backfill failed — see traceback below (often a data-source outage, e.g. FRED HTTP 5xx)"
+          echo "----- tail of backfill output -----"
+          tail -n 50 backfill_run.log || true
           exit 1

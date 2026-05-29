@@ -29,14 +29,15 @@ jobs:
 
       - name: Run daily ingest
         id: ingest
+        continue-on-error: true
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: |
-          set +e
-          python -m scripts.daily_ingest
-          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+          set -o pipefail
+          python -m scripts.daily_ingest 2>&1 | tee ingest_run.log
 
       - name: Commit & push
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -53,8 +54,10 @@ jobs:
           git pull --rebase origin "${GITHUB_REF_NAME:-main}"
           git push origin "HEAD:${GITHUB_REF_NAME:-main}"
 
-      - name: Fail on high error ratio
-        if: steps.ingest.outputs.exit_code != '0'
+      - name: Surface ingest failure
+        if: steps.ingest.outcome == 'failure'
         run: |
-          echo "daily ingest exited non-zero: ${{ steps.ingest.outputs.exit_code }}"
+          echo "::error::daily ingest failed — see traceback below (often a data-source outage, e.g. FRED HTTP 5xx)"
+          echo "----- tail of ingest output -----"
+          tail -n 50 ingest_run.log || true
           exit 1
