@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: market-data-push
+  cancel-in-progress: false
+
 jobs:
   ingest:
     runs-on: ubuntu-latest
@@ -51,8 +55,24 @@ jobs:
           written="$(python -c "import json,sys; d=json.load(open(sys.argv[1])); print(d['written'])" "$summary_json")"
           errors="$(python -c "import json,sys; d=json.load(open(sys.argv[1])); print(len(d['errors']))" "$summary_json")"
           git commit -m "ingest: ${run_date} daily snapshot (${written} written, ${errors} errors)"
-          git pull --rebase origin "${GITHUB_REF_NAME:-main}"
-          git push origin "HEAD:${GITHUB_REF_NAME:-main}"
+          branch="${GITHUB_REF_NAME:-main}"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin "$branch"
+            if ! git rebase -X theirs "origin/$branch"; then
+              echo "::warning::rebase に未解決の衝突 (attempt $attempt) — abort して再試行"
+              git rebase --abort
+              sleep $((attempt * 3))
+              continue
+            fi
+            if git push origin "HEAD:$branch"; then
+              echo "pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "::warning::push 拒否 — リモートが前進 (attempt $attempt) — 再同期"
+            sleep $((attempt * 3))
+          done
+          echo "::error::5 回試行しても snapshot を push できませんでした"
+          exit 1
 
       - name: Surface ingest failure
         if: steps.ingest.outcome == 'failure'

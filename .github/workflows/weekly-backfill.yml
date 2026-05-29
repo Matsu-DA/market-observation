@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: market-data-push
+  cancel-in-progress: false
+
 jobs:
   backfill:
     runs-on: ubuntu-latest
@@ -50,8 +54,24 @@ jobs:
           summary_json="$(ls -1t logs/summary_*_backfill.json | head -n 1)"
           written="$(python -c "import json,sys; d=json.load(open(sys.argv[1])); print(d['written'])" "$summary_json")"
           git commit -m "backfill: ${run_date} weekly fill (${written} filled)"
-          git pull --rebase origin "${GITHUB_REF_NAME:-main}"
-          git push origin "HEAD:${GITHUB_REF_NAME:-main}"
+          branch="${GITHUB_REF_NAME:-main}"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin "$branch"
+            if ! git rebase -X theirs "origin/$branch"; then
+              echo "::warning::rebase に未解決の衝突 (attempt $attempt) — abort して再試行"
+              git rebase --abort
+              sleep $((attempt * 3))
+              continue
+            fi
+            if git push origin "HEAD:$branch"; then
+              echo "pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "::warning::push 拒否 — リモートが前進 (attempt $attempt) — 再同期"
+            sleep $((attempt * 3))
+          done
+          echo "::error::5 回試行しても backfill を push できませんでした"
+          exit 1
 
       - name: Surface backfill failure
         if: steps.backfill.outcome == 'failure'
