@@ -1,0 +1,50 @@
+{
+  "errors": [
+    {
+      "dataset": "DGS30",
+      "error": "FredApiError: FRED API error for DGS30: Too Many Requests.  Exceeded Rate Limit",
+      "source": "fred"
+    },
+    {
+      "dataset": "DFII10",
+      "error": "FredApiError: FRED API error for DFII10: Too Many Requests.  Exceeded Rate Limit",
+      "source": "fred"
+    },
+    {
+      "dataset": "T10YIE",
+      "error": "FredApiError: FRED API error for T10YIE: Too Many Requests.  Exceeded Rate Limit",
+      "source": "fred"
+    },
+    {
+      "dataset": "T10Y2Y",
+      "error": "FredApiError: FRED API error for T10Y2Y: Too Many Requests.  Exceeded Rate Limit",
+      "source": "fred"
+    },
+    {
+      "dataset": "VIXCLS",
+      "error": "FredApiError: FRED API error for VIXCLS: Too Many Requests.  Exceeded Rate Limit",
+      "source": "fred"
+    },
+    {
+      "dataset": "SOFR",
+      "error": "FredApiError: FRED API error for SOFR: Too Many Requests.  Exceeded Rate Limit",
+      "source": "fred"
+    },
+    {
+      "dataset": "DFF",
+      "error": "FredApiError: FRED API error for DFF: Too Many Requests.  Exceeded Rate Limit",
+      "source": "fred"
+    },
+    {
+      "dataset": "RRPONTSYD",
+      "error": "FredApiError: FRED API error for RRPONTSYD: Too Many Requests.  Exceeded Rate Limit",
+      "source": "fred"
+    }
+  ],
+  "kind": "backfill",
+  "run_at": "2026-06-01T00:09:55Z",
+  "skipped_empty": 0,
+  "skipped_exists": 367,
+  "total_datasets": 28,
+  "written": 9
+}
