@@ -1,0 +1,35 @@
+{
+  "errors": [
+    {
+      "dataset": "DGS30",
+      "error": "FredApiError: FRED API error for DGS30: Too Many Requests.  Exceeded Rate Limit",
+      "source": "fred"
+    },
+    {
+      "dataset": "DFII10",
+      "error": "FredApiError: FRED API error for DFII10: Too Many Requests.  Exceeded Rate Limit",
+      "source": "fred"
+    },
+    {
+      "dataset": "BAMLH0A0HYM2",
+      "error": "FredApiError: FRED API error for BAMLH0A0HYM2: Too Many Requests.  Exceeded Rate Limit",
+      "source": "fred"
+    },
+    {
+      "dataset": "BAMLC0A0CM",
+      "error": "FredApiError: FRED API error for BAMLC0A0CM: Too Many Requests.  Exceeded Rate Limit",
+      "source": "fred"
+    },
+    {
+      "dataset": "DFF",
+      "error": "FredApiError: FRED API error for DFF: Too Many Requests.  Exceeded Rate Limit",
+      "source": "fred"
+    }
+  ],
+  "kind": "daily",
+  "run_at": "2026-06-01T23:27:06Z",
+  "skipped_empty": 0,
+  "skipped_exists": 18,
+  "total_datasets": 28,
+  "written": 23
+}
