@@ -1,0 +1,15 @@
+{
+  "errors": [
+    {
+      "dataset": "BAMLH0A0HYM2",
+      "error": "FredApiError: FRED API unreachable (HTTP 200 (API reachable)); dataset=BAMLH0A0HYM2",
+      "source": "fred"
+    }
+  ],
+  "kind": "backfill",
+  "run_at": "2026-06-22T00:15:03Z",
+  "skipped_empty": 0,
+  "skipped_exists": 491,
+  "total_datasets": 28,
+  "written": 4
+}
