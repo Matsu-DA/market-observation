@@ -1,0 +1,9 @@
+{
+  "errors": [],
+  "kind": "backfill",
+  "run_at": "2026-06-29T00:11:59Z",
+  "skipped_empty": 0,
+  "skipped_exists": 522,
+  "total_datasets": 28,
+  "written": 18
+}
