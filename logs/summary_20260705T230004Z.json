@@ -1,0 +1,15 @@
+{
+  "errors": [
+    {
+      "dataset": "DGS10",
+      "error": "FredApiError: FRED API unreachable (HTTP 200 (API reachable)); dataset=DGS10",
+      "source": "fred"
+    }
+  ],
+  "kind": "daily",
+  "run_at": "2026-07-05T23:00:04Z",
+  "skipped_empty": 7,
+  "skipped_exists": 20,
+  "total_datasets": 28,
+  "written": 0
+}
