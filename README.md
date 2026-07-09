@@ -77,6 +77,8 @@ logs/
   summary_<ISO8601>_backfill.json
 ```
 
+サマリ JSON には `stale_datasets` フィールドが含まれる。直近 `DEFAULT_STALE_AFTER_DAYS`（= 7）暦日にパーティションが 1 つも存在しない dataset の一覧で、ティッカー廃止等による無音の途絶（silent decay）を記録する。GitHub Actions 実行時は `::warning::` アノテーションも出力される。現在は全 dataset 共通の `DEFAULT_STALE_AFTER_DAYS` を使用。weekly/monthly 系列を追加する際は dataset 毎の閾値へ拡張する。
+
 すべての partition key (`source`, `dataset`, `year`, `month`, `day`) を
 ディレクトリ階層として保持。DuckDB / Polars / Spark / Athena から
 `hive_partitioning = true` でそのまま読める。
@@ -114,6 +116,13 @@ pip install -r requirements.txt
 export FRED_API_KEY=...
 python -m scripts.daily_ingest
 python -m scripts.weekly_backfill
+```
+
+テスト:
+
+```bash
+pip install -r requirements-dev.txt
+pytest -q
 ```
 
 ---

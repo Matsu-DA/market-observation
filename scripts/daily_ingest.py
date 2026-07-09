@@ -7,6 +7,7 @@ error ratio exceeds ERROR_RATIO_THRESHOLD.
 from __future__ import annotations
 
 import logging
+import os
 import sys
 from datetime import datetime, timezone
 
@@ -34,6 +35,13 @@ def main() -> int:
         result.written, result.skipped_exists, result.skipped_empty,
         len(result.errors), ratio,
     )
+
+    if result.stale_datasets:
+        names = ", ".join(f"{s['source']}/{s['dataset']}" for s in result.stale_datasets)
+        log.warning("stale_datasets_detected count=%d datasets=%s",
+                    len(result.stale_datasets), names)
+        if os.environ.get("GITHUB_ACTIONS") == "true":
+            print(f"::warning::stale datasets (no data in last week): {names}")
 
     if ratio > ERROR_RATIO_THRESHOLD:
         log.error("error_ratio_exceeded ratio=%.2f threshold=%.2f",

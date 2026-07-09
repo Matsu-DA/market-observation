@@ -19,6 +19,7 @@ import pandas as pd
 
 from scripts import storage
 from scripts.config import (
+    DEFAULT_STALE_AFTER_DAYS,
     ERROR_RATIO_THRESHOLD,
     FRED_DATASETS,
     LOGS_DIR,
@@ -41,6 +42,7 @@ class IngestResult:
     skipped_empty: int = 0
     errors: list[dict] = field(default_factory=list)
     total_datasets: int = 0
+    stale_datasets: list[dict] = field(default_factory=list)
 
     def as_dict(self) -> dict:
         return {
@@ -51,6 +53,7 @@ class IngestResult:
             "skipped_empty": self.skipped_empty,
             "errors": self.errors,
             "total_datasets": self.total_datasets,
+            "stale_datasets": self.stale_datasets,
         }
 
     def error_ratio(self) -> float:
@@ -161,6 +164,21 @@ def run_ingest(
 
     for provider, dataset in plan:
         _ingest_dataset(provider, dataset, targets, result)
+
+    # Detect silent decay: a dataset returning empty responses continuously (e.g. a
+    # retired ticker) will never raise an exception, so we scan the last
+    # DEFAULT_STALE_AFTER_DAYS calendar days for any partition.
+    # exists() is a metadata-only check; at current dataset counts (dataset_count × 8
+    # calls) this is negligible. If dataset count grows significantly, add a
+    # list_partitions() API to storage to replace the per-day loop.
+    stale_window = _target_days(reference, DEFAULT_STALE_AFTER_DAYS)
+    for provider, dataset in plan:
+        if not any(storage.exists(provider.name, dataset, d) for d in stale_window):
+            result.stale_datasets.append({"source": provider.name, "dataset": dataset})
+            log.warning(
+                "stale_dataset source=%s dataset=%s window_days=%d",
+                provider.name, dataset, DEFAULT_STALE_AFTER_DAYS,
+            )
 
     _write_summary(result, now, kind)
     return result

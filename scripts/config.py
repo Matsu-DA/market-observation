@@ -13,6 +13,12 @@ BACKFILL_LOOKBACK_DAYS = 30
 
 ERROR_RATIO_THRESHOLD = 0.30
 
+# Calendar-day threshold for staleness detection. Markets close at most ~4 consecutive
+# days (long weekends), so 7 days avoids false positives for daily series.
+# Named with "DEFAULT_" prefix in anticipation of per-dataset overrides when
+# weekly/monthly series are added.
+DEFAULT_STALE_AFTER_DAYS = 7
+
 FRED_DATASETS = [
     # Rates
     "DGS2",
