@@ -1,0 +1,10 @@
+{
+  "errors": [],
+  "kind": "daily",
+  "run_at": "2026-07-14T22:56:13Z",
+  "skipped_empty": 1,
+  "skipped_exists": 18,
+  "stale_datasets": [],
+  "total_datasets": 28,
+  "written": 29
+}
