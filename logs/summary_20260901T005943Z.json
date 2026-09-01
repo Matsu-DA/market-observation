@@ -1,0 +1,15 @@
+{
+  "errors": [],
+  "kind": "daily",
+  "run_at": "2026-09-01T00:59:43Z",
+  "skipped_empty": 10,
+  "skipped_exists": 0,
+  "stale_datasets": [
+    {
+      "dataset": "DTWEXBGS",
+      "source": "fred"
+    }
+  ],
+  "total_datasets": 28,
+  "written": 18
+}
