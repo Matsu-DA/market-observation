@@ -1,0 +1,15 @@
+{
+  "errors": [],
+  "kind": "backfill",
+  "run_at": "2026-09-07T00:46:24Z",
+  "skipped_empty": 0,
+  "skipped_exists": 540,
+  "stale_datasets": [
+    {
+      "dataset": "DTWEXBGS",
+      "source": "fred"
+    }
+  ],
+  "total_datasets": 28,
+  "written": 14
+}
