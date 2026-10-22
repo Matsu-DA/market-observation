@@ -1,0 +1,81 @@
+{
+  "errors": [
+    {
+      "dataset": "DGS2",
+      "error": "FredApiError: FRED API error for DGS2: syntax error: line 1, column 0",
+      "source": "fred"
+    },
+    {
+      "dataset": "DGS10",
+      "error": "FredApiError: FRED API error for DGS10: syntax error: line 1, column 0",
+      "source": "fred"
+    },
+    {
+      "dataset": "DGS30",
+      "error": "FredApiError: FRED API error for DGS30: syntax error: line 1, column 0",
+      "source": "fred"
+    },
+    {
+      "dataset": "DFII10",
+      "error": "FredApiError: FRED API error for DFII10: syntax error: line 1, column 0",
+      "source": "fred"
+    },
+    {
+      "dataset": "T10YIE",
+      "error": "FredApiError: FRED API error for T10YIE: syntax error: line 1, column 0",
+      "source": "fred"
+    },
+    {
+      "dataset": "T10Y2Y",
+      "error": "FredApiError: FRED API error for T10Y2Y: syntax error: line 1, column 0",
+      "source": "fred"
+    },
+    {
+      "dataset": "BAMLH0A0HYM2",
+      "error": "FredApiError: FRED API error for BAMLH0A0HYM2: syntax error: line 1, column 0",
+      "source": "fred"
+    },
+    {
+      "dataset": "BAMLC0A0CM",
+      "error": "FredApiError: FRED API error for BAMLC0A0CM: syntax error: line 1, column 0",
+      "source": "fred"
+    },
+    {
+      "dataset": "VIXCLS",
+      "error": "FredApiError: FRED API error for VIXCLS: syntax error: line 1, column 0",
+      "source": "fred"
+    },
+    {
+      "dataset": "SOFR",
+      "error": "FredApiError: FRED API error for SOFR: syntax error: line 1, column 0",
+      "source": "fred"
+    },
+    {
+      "dataset": "DFF",
+      "error": "FredApiError: FRED API error for DFF: syntax error: line 1, column 0",
+      "source": "fred"
+    },
+    {
+      "dataset": "RRPONTSYD",
+      "error": "FredApiError: FRED API error for RRPONTSYD: syntax error: line 1, column 0",
+      "source": "fred"
+    },
+    {
+      "dataset": "DTWEXBGS",
+      "error": "FredApiError: FRED API error for DTWEXBGS: syntax error: line 1, column 0",
+      "source": "fred"
+    }
+  ],
+  "kind": "daily",
+  "run_at": "2026-10-22T00:25:57Z",
+  "skipped_empty": 0,
+  "skipped_exists": 30,
+  "stale_datasets": [
+    {
+      "dataset": "DTWEXBGS",
+      "source": "fred"
+    }
+  ],
+  "total_datasets": 28,
+  "written": 15
+}
